@@ -21,18 +21,18 @@ fn problem1(file_name: &str) {
     let mut file = File::open(file_name).unwrap();
     file.read_to_string(&mut data).unwrap();
 
-    let elves: Vec<&str> = data.trim().split("\n\n").collect();
-    
-    let mut top_three: Vec<u32> = vec![0,0,0];
-    for elf in elves {
-        let mut candidate: u32 = elf.split('\n').map(|amount| amount.parse::<u32>().unwrap()).sum();
-        
-        for slot in top_three.iter_mut() {
-            if candidate > *slot {
-                candidate = replace(slot, candidate);
+    let top_three = data
+        .trim()
+        .split("\n\n")
+        .fold(vec![0,0,0], |mut acc, val|{
+            let mut candidate = val.split('\n').map(|amount| amount.parse::<u32>().unwrap()).sum();
+            for slot in acc.iter_mut() {
+                if candidate > *slot {
+                    candidate = replace(slot, candidate);
+                }
             }
-        }
-    }
+            acc
+        });
 
     println!("Largest total is: {}", top_three[0]);
     println!("Largest 3 totals summed are: {}", top_three.iter().sum::<u32>());
