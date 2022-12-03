@@ -1,6 +1,10 @@
+#![feature(iter_array_chunks)]
+use std::collections::hash_set::Intersection;
+use std::hash::Hash;
 use std::{fs::File, io::Read};
 use std::mem::replace;
 use std::env::args;
+use std::collections::HashSet;
 
 fn main() {
     
@@ -9,6 +13,7 @@ fn main() {
     match arguments[1].as_str() {
         "1" => problem1("inputs/problem1/input.txt"),
         "2" => problem2("inputs/problem2/input.txt"),
+        "3" => problem3("inputs/problem3/input.txt"),
         _ => eprintln!("Unknown problem number {}", arguments[1])
     }
 
@@ -142,3 +147,55 @@ fn problem2(file_path: &str) {
     println!("Second Total score is: {}", second_total);
 }
 
+fn problem3(file_path: &str) {
+    
+    let mut file = File::open(file_path).unwrap();
+    let mut data = String::new();
+    file.read_to_string(&mut data).unwrap();
+
+    fn get_priorty(item: char) -> u32 {
+        match item {
+            item if item.is_uppercase() => {
+                let value: u32 = item.into();
+                value - 38
+            },
+            item if item.is_lowercase() => {
+                let value: u32 =  item.into();
+                value - 96
+            },
+            _ => unreachable!(),
+        }
+    }
+
+    let total = data
+        .trim()
+        .split('\n')
+        .fold(0, |acc, line| {
+            let (first, last) = line.split_at(line.len() / 2);
+            let first_set: HashSet<char> =  HashSet::from_iter(first.chars());
+            let last_set =  HashSet::from_iter(last.chars());
+            let item: char = *first_set.intersection(&last_set).collect::<Vec<&char>>()[0];
+            let priority = get_priorty(item);
+            acc + priority
+        });
+
+    let group_total = data.trim().split('\n').array_chunks::<3>().fold(
+        0,
+        |acc, groups| {
+            let letter: char = groups
+                .into_iter()
+                .map(|s| HashSet::from_iter(s.chars()))
+                .reduce(
+                    |acc: HashSet<char, _>, group: HashSet<char, _>| {
+                            group.intersection(&acc).copied().collect::<HashSet<char>>()
+                    }
+                ).unwrap().into_iter().collect::<Vec<char>>()[0];
+            
+            acc + get_priorty(letter)
+        }
+    );
+
+
+    println!("Total priority is: {}", total);
+    println!("Group total priorities is: {}", group_total);
+}
