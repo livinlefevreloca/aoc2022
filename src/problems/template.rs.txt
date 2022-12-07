@@ -1,0 +1,38 @@
+use crate::solution::Solution;
+use std::{fs::File, io::Read};
+
+
+pub struct Problem {
+    pub name: String
+}
+
+
+impl Solution for Problem {
+    
+    type Input = String;
+    type Output = i32;
+
+    fn get_input_file(&self, test: bool) -> String {
+        let file_name = if test {
+            "test.txt"
+        } else {
+            "input.txt"
+        };
+
+        format!("inputs/{}/{}", self.name, file_name)
+    }
+
+    fn parse_input(&self, file_path: &str) -> Self::Input {
+        let data: String = String::new();
+        let file = File::open(file_path).unwrap();
+        file.read_to_string(&mut data);
+    }
+
+    fn solve1(&self, data: &Self::Input) -> Self::Output {
+        todo!()
+    }
+
+    fn solve2(&self, data: &Self::Input) -> Self::Output {
+        todo!()
+    }
+}
