@@ -1,7 +1,7 @@
 #![feature(array_chunks)]
 use std::env::args;
 
-use crate::problems::{problem1, problem2, problem3, problem4, problem5, problem6, problem7};
+use crate::problems::{problem1, problem2, problem3, problem4, problem5, problem6, problem7, problem8, problem9};
 use crate::solution::Solution;
 
 mod solution;
@@ -19,6 +19,8 @@ fn main() {
         "5" => problem5::Problem { name: "problem5".to_string() }.get_output(false),
         "6" => problem6::Problem { name: "problem6".to_string() }.get_output(false),
         "7" => problem7::Problem { name: "problem7".to_string() }.get_output(false),
+        "8" => problem8::Problem { name: "problem8".to_string() }.get_output(false),
+        "9" => problem9::Problem { name: "problem9".to_string() }.get_output(false),
         _ => eprintln!("Unknown problem number {}", arguments[1])
     }
 }
