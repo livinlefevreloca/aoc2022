@@ -8,9 +8,9 @@ pub trait Solution {
     fn parse_input(&self, file_path: &str) -> Self::Input;
     fn solve1(&self, data: &Self::Input) -> Self::Output;
     fn solve2(&self, data: &Self::Input) -> Self::Output;
-    fn get_input_file(&self, test: bool) -> String;
+    fn get_input_file(&self, test: &str) -> String;
 
-    fn get_output(&self, test: bool) {
+    fn get_output(&self, test: &str) {
         
         let file_path = self.get_input_file(test);
         let data = self.parse_input(&file_path);

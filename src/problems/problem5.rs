@@ -82,8 +82,8 @@ impl Solution for Problem {
     type Input = (Vec<String>, Vec<String>);
     type Output = String;
 
-    fn get_input_file(&self, test: bool) -> String {
-        let file_name = if test {
+    fn get_input_file(&self, test: &str) -> String {
+        let file_name = if test == "true" {
             "test.txt"
         } else {
             "input.txt"
