@@ -2,7 +2,7 @@
 use std::env::args;
 
 use crate::problems::{
-    problem1, problem2, problem3, problem4, problem5, problem6, problem7, problem8, problem9, problem10,
+    problem1, problem2, problem3, problem4, problem5, problem6, problem7, problem8, problem9, problem10, problem11, problem12
 };
 use crate::solution::Solution;
 
@@ -28,6 +28,7 @@ fn main() {
         "8" => problem8::Problem { name: "problem8".to_string() }.get_output(arguments[2].as_str()),
         "9" => problem9::Problem { name: "problem9".to_string() }.get_output(arguments[2].as_str()),
         "10" => problem10::Problem { name: "problem10".to_string() }.get_output(arguments[2].as_str()),
+        "11" => problem11::Problem { name: "problem11".to_string() }.get_output(arguments[2].as_str()),
         _ => eprintln!("Unknown problem number {}", arguments[1])
     }
 }
